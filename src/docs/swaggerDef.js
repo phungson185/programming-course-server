@@ -14,7 +14,12 @@ const swaggerDef = {
   servers: [
     {
       url: `http://localhost:${config.port}/v1`,
+      description: 'Local server',
     },
+    {
+      url: `https://programming-course-server.herokuapp.com/v1`
+      description: 'Heroku server',
+    }
   ],
 };
 
