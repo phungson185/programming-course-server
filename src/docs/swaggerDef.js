@@ -17,7 +17,7 @@ const swaggerDef = {
       description: 'Local server',
     },
     {
-      url: `https://programming-course-server.herokuapp.com/v1`
+      url: `https://programming-course-server.herokuapp.com/v1`,
       description: 'Heroku server',
     }
   ],
