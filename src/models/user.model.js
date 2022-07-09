@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const { toJSON, paginate } = require('./plugins');
-const { roles } = require('../config/roles');
 
 const userSchema = mongoose.Schema(
   {
@@ -37,13 +36,41 @@ const userSchema = mongoose.Schema(
     },
     role: {
       type: String,
-      enum: roles,
       default: 'user',
     },
     isEmailVerified: {
       type: Boolean,
       default: false,
     },
+    code: {
+      type: String,
+    },
+    avatar: {
+      type: String,
+      default: 'https://gravatar.com/avatar/placeholder?s=200',
+    },
+    cover: {
+      type: String,
+      default:
+        'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
+    },
+    achievements: [
+      {
+        courseId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Course',
+        },
+        scores: [
+          {
+            lessonId: {
+              type: mongoose.Schema.Types.ObjectId,
+              ref: 'Lesson',
+            },
+            score: Number,
+          },
+        ],
+      },
+    ],
   },
   {
     timestamps: true,
