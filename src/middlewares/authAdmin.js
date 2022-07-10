@@ -3,7 +3,8 @@ const jwt = require('jsonwebtoken');
 const { userService } = require('../services');
 const config = require('../config/config');
 const ApiError = require('../utils/ApiError');
-const authUser = async (req, res, next) => {
+
+const authAdmin = async (req, res, next) => {
   let token;
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     token = req.headers.authorization.split(' ')[1];
@@ -24,9 +25,13 @@ const authUser = async (req, res, next) => {
       throw new ApiError(httpStatus.UNAUTHORIZED, 'Token expired');
     }
 
+    if (user.role !== 'admin') {
+        throw new ApiError(httpStatus.UNAUTHORIZED, 'User is not admin');
+    }
+
     req.user = user;
   }
   next();
 };
 
-module.exports = authUser;
+module.exports = authAdmin;
