@@ -15,7 +15,6 @@ const attendanceSchema = mongoose.Schema(
     },
     achivement: {
       type: String,
-      required: true,
       trim: true,
     },
   },
@@ -24,7 +23,7 @@ const attendanceSchema = mongoose.Schema(
   },
 );
 
-categorySchema.plugin(toJSON);
+attendanceSchema.plugin(toJSON);
 
 const Attendance = mongoose.model('Attendance', attendanceSchema);
 

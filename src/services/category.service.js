@@ -38,6 +38,7 @@ const getCategoryById = async (id) => {
 
 module.exports = {
   getCategories,
+  getCategoryById,
   createCategory,
   editCategory,
   deleteCategory,
