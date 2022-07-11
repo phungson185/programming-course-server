@@ -13,6 +13,17 @@ const loginUserWithEmailAndPassword = async (email, password) => {
   return user;
 };
 
+
+const forgotPassword = async (email, newPassword) => {
+  const user = await userService.getUserByEmail(email);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+  }
+  user.password = newPassword;
+  await user.save();
+  return user;
+}
+
 const resetPassword = async (userId, newPassword) => {
   try {
     const user = await userService.getUserById(userId);
@@ -38,6 +49,7 @@ const verifyEmail = async (email, code) => {
 
 module.exports = {
   loginUserWithEmailAndPassword,
+  forgotPassword,
   resetPassword,
   verifyEmail,
 };
