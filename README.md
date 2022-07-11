@@ -15,3 +15,9 @@ Install the dependencies:
 ```bash
 yarn install
 ```
+
+Run:
+
+```bash
+yarn start:dev
+```
