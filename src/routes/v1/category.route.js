@@ -9,13 +9,12 @@ router.post('/add', authAdmin, categoryController.addCategory);
 router.put('/:id/edit', authAdmin, categoryController.editCategory);
 router.delete('/:id/delete', authAdmin, categoryController.deleteCategory);
 
-
 module.exports = router;
 
 /**
  * @swagger
  * tags:
- *   name: Catgory
+ *   name: Category
  *   description: Only admins can update categories.
  */
 
@@ -24,7 +23,7 @@ module.exports = router;
  * /category:
  *   get:
  *     summary: Get categories
- *     tags: [Catgory]
+ *     tags: [Category]
  *     responses:
  *       "200":
  *         description: SUCCESS
@@ -35,7 +34,7 @@ module.exports = router;
  * /category/add:
  *   post:
  *     summary: Add category
- *     tags: [Catgory]
+ *     tags: [Category]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -61,7 +60,7 @@ module.exports = router;
  * /category/{id}/edit:
  *   put:
  *     summary: Edit category
- *     tags: [Catgory]
+ *     tags: [Category]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -93,7 +92,7 @@ module.exports = router;
  * /category/{id}/delete:
  *   delete:
  *     summary: Delete category
- *     tags: [Catgory]
+ *     tags: [Category]
  *     security:
  *       - bearerAuth: []
  *     parameters:

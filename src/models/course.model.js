@@ -19,21 +19,71 @@ const courseSchema = mongoose.Schema(
       required: true,
       trim: true,
     },
-    category: {
+    categoryId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Category',
       required: true,
     },
-    userId: [
+    lessons: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        name: {
+          type: String,
+          required: true,
+          maxlength: 255,
+          trim: true,
+        },
+        description: {
+          type: String,
+          required: true,
+          trim: true,
+        },
+        video: {
+          type: String,
+          required: true,
+          trim: true,
+        },
       },
     ],
+    quiz: {
+      title: {
+        type: String,
+        required: true,
+      },
+      questions: [
+        {
+          question: {
+            type: String,
+            required: true,
+          },
+          answers: {
+            A: {
+              type: String,
+              required: true,
+            },
+            B: {
+              type: String,
+              required: true,
+            },
+            C: {
+              type: String,
+              required: true,
+            },
+            D: {
+              type: String,
+              required: true,
+            },
+          },
+          correctAnswer: {
+            type: String,
+            required: true,
+          },
+        },
+      ],
+    },
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 courseSchema.plugin(toJSON);

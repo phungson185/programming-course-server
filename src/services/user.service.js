@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
 const { User } = require('../models');
 const ApiError = require('../utils/ApiError');
+const mongoose = require('mongoose');
 
 const createUser = async (userBody, code) => {
   if (await User.isEmailTaken(userBody.email)) {
@@ -16,7 +17,9 @@ const queryUsers = async (filter, options) => {
 };
 
 const getUserById = async (id) => {
-  return User.findById(id);
+  if (mongoose.Types.ObjectId.isValid(id)) {
+    return User.findById(id);
+  }
 };
 
 const getUserByEmail = async (email) => {
