@@ -4,6 +4,7 @@ const authAdmin = require('../../middlewares/authAdmin');
 
 const router = express.Router();
 
+router.get('', courseController.getCourses);
 router.post('/add', authAdmin, courseController.addCourse);
 
 module.exports = router;
@@ -13,6 +14,47 @@ module.exports = router;
  * tags:
  *   name: Course
  *   description: Only admins can update course.
+ */
+
+/**
+ * @swagger
+ * /course:
+ *   get:
+ *     summary: Get courses
+ *     tags: [Course]
+ *     parameters:
+ *       - in: query
+ *         name: name
+ *         schema:
+ *           type: string
+ *         description: Course name
+ *       - in: query
+ *         name: categoryId
+ *         schema:
+ *           type: string
+ *         description: Course categoryId
+ *       - in: query
+ *         name: sortBy
+ *         schema:
+ *           type: string
+ *         description: sort by query in the form of field:desc/asc (ex. name:asc)
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *         default: 10
+ *         description: Maximum number of courses per page
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           default: 1
+ *         description: Page number
+ *     responses:
+ *       "200":
+ *         description: SUCCESS
  */
 
 /**

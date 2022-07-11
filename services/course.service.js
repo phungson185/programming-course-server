@@ -4,6 +4,10 @@ const ApiError = require('../utils/ApiError');
 const mongoose = require('mongoose');
 const categoryService = require('./category.service');
 
+const getCourses = async (filters, options) => {
+  return await Course.paginate(filters, options);
+};
+
 const createCourse = async (courseBody) => {
   const category = await categoryService.getCategoryById(courseBody.categoryId);
   if (!category) {
@@ -19,6 +23,7 @@ const getCourseById = async (id) => {
 };
 
 module.exports = {
+  getCourses,
   createCourse,
   getCourseById,
 };
