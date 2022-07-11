@@ -4,6 +4,11 @@ const Response = require('../utils/Response');
 const { categoryService } = require('../services');
 const logger = require('../config/logger');
 
+const getCategories = catchAsync(async (req, res) => {
+  const categories = await categoryService.getCategories();
+  res.send(new Response(httpStatus.OK, categories));
+});
+
 const addCategory = catchAsync(async (req, res) => {
   const category = await categoryService.createCategory(req.body);
   res.send(new Response(httpStatus.OK, category));
@@ -21,6 +26,7 @@ const deleteCategory = catchAsync(async (req, res) => {
 });
 
 module.exports = {
+  getCategories,
   addCategory,
   editCategory,
   deleteCategory,

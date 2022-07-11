@@ -3,6 +3,10 @@ const { Category } = require('../models');
 const ApiError = require('../utils/ApiError');
 const mongoose = require('mongoose');
 
+const getCategories = async () => {
+  return await Category.find();
+}
+
 const createCategory = async (categoryBody) => {
   return Category.create(categoryBody);
 };
@@ -33,6 +37,7 @@ const getCategoryById = async (id) => {
 };
 
 module.exports = {
+  getCategories,
   createCategory,
   editCategory,
   deleteCategory,
