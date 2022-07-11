@@ -95,9 +95,9 @@ module.exports = router;
  *             example:
  *               name: python course
  *               description: python course description
- *               image: https://www.example.com/image.png
+ *               image: https://random.imagecdn.app/500/150
  *               categoryId: 62cb8c8a4ce8cb5bc86fca42
- *               lessons: [{name: 'lesson 1', description: 'lesson 1 description', video: 'https://www.example.com/video.mp4'}, {name: 'lesson 2', description: 'lesson 2 description', video: 'https://www.example.com/video.mp4'}]
+ *               lessons: [{name: 'lesson 1', description: 'lesson 1 description', video: 'https://www.youtube.com/watch?v=UL-gyDKblFQ'}, {name: 'lesson 2', description: 'lesson 2 description', video: 'https://www.youtube.com/watch?v=qbwXRAJCQrg'}]
  *               quiz: {title: 'quiz 1', questions: [{question: 'question 1', answers: {A: 'answer 1', B: 'answer 2', C: 'answer 3', D: 'answer 4'}, correctAnswer: 'A'}, {question: 'question 2', answers: {A: 'answer 1', B: 'answer 2', C: 'answer 3', D: 'answer 4'}, correctAnswer: 'A'}]}
  *     responses:
  *       "200":

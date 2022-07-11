@@ -5,6 +5,7 @@ const authAdmin = require('../../middlewares/authAdmin');
 const router = express.Router();
 
 router.get('', categoryController.getCategories);
+router.get('/:id', categoryController.getCategoryById);
 router.post('/add', authAdmin, categoryController.addCategory);
 router.put('/:id/edit', authAdmin, categoryController.editCategory);
 router.delete('/:id/delete', authAdmin, categoryController.deleteCategory);
@@ -50,6 +51,24 @@ module.exports = router;
  *                 type: string
  *             example:
  *               name: python
+ *     responses:
+ *       "200":
+ *         description: SUCCESS
+ */
+
+/**
+ * @swagger
+ * /category/{id}:
+ *   get:
+ *     summary: Get category by id
+ *     tags: [Category]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: CategoryId
  *     responses:
  *       "200":
  *         description: SUCCESS

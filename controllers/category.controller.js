@@ -8,6 +8,11 @@ const getCategories = catchAsync(async (req, res) => {
   res.send(new Response(httpStatus.OK, categories));
 });
 
+const getCategoryById = catchAsync(async (req, res) => {
+  const category = await categoryService.getCategoryById(req.params.id);
+  res.send(new Response(httpStatus.OK, category));
+});
+
 const addCategory = catchAsync(async (req, res) => {
   const category = await categoryService.createCategory(req.body);
   res.send(new Response(httpStatus.OK, category));
@@ -25,6 +30,7 @@ const deleteCategory = catchAsync(async (req, res) => {
 
 module.exports = {
   getCategories,
+  getCategoryById,
   addCategory,
   editCategory,
   deleteCategory,

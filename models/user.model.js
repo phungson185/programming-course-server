@@ -29,7 +29,9 @@ const userSchema = mongoose.Schema(
       minlength: 8,
       validate(value) {
         if (!value.match(/\d/) || !value.match(/[a-zA-Z]/)) {
-          throw new Error('Password must contain at least one letter and one number');
+          throw new Error(
+            'Password must contain at least one letter and one number',
+          );
         }
       },
       private: true, // used by the toJSON plugin
@@ -47,17 +49,16 @@ const userSchema = mongoose.Schema(
     },
     avatar: {
       type: String,
-      default: 'https://gravatar.com/avatar/placeholder?s=200',
+      default: 'https://random.imagecdn.app/500/150',
     },
     cover: {
       type: String,
-      default:
-        'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-    }
+      default: 'https://random.imagecdn.app/500/150',
+    },
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 // add plugin that converts mongoose to json
