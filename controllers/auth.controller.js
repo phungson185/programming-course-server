@@ -20,7 +20,7 @@ const forgotPassword = catchAsync(async (req, res) => {
   try {
     const newPassword = Math.random().toString(36).substring(2, 15);
     await emailService.sendResetPasswordEmail(req.body.email, newPassword);
-    await userService.forgotPassword(req.body.email, newPassword);
+    await authService.forgotPassword(req.body.email, newPassword);
     res.send(new Response(httpStatus.OK, null, 'New password sent'));
   } catch (error) {
     res.status(httpStatus.BAD_REQUEST).send({ error });
