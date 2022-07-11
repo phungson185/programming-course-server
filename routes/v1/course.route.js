@@ -5,6 +5,7 @@ const authAdmin = require('../../middlewares/authAdmin');
 const router = express.Router();
 
 router.get('', courseController.getCourses);
+router.get('/:id', courseController.getCourseById);
 router.post('/add', authAdmin, courseController.addCourse);
 
 module.exports = router;
@@ -98,6 +99,23 @@ module.exports = router;
  *               categoryId: 62cb8c8a4ce8cb5bc86fca42
  *               lessons: [{name: 'lesson 1', description: 'lesson 1 description', video: 'https://www.example.com/video.mp4'}, {name: 'lesson 2', description: 'lesson 2 description', video: 'https://www.example.com/video.mp4'}]
  *               quiz: {title: 'quiz 1', questions: [{question: 'question 1', answers: {A: 'answer 1', B: 'answer 2', C: 'answer 3', D: 'answer 4'}, correctAnswer: 'A'}, {question: 'question 2', answers: {A: 'answer 1', B: 'answer 2', C: 'answer 3', D: 'answer 4'}, correctAnswer: 'A'}]}
+ *     responses:
+ *       "200":
+ *         description: SUCCESS
+ */
+
+/**
+ * @swagger
+ * /course/{id}:
+ *   get:
+ *     summary: Get course
+ *     tags: [Course]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
  *     responses:
  *       "200":
  *         description: SUCCESS
