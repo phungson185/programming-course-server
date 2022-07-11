@@ -164,7 +164,7 @@ module.exports = router;
  *                 type: string
  *             example:
  *               email: fake@example.com
- *               code: 123456
+ *               code: "123456"
  *     responses:
  *       "200":
  *         description: SUCCESS
