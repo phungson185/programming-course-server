@@ -4,6 +4,7 @@ const authAdmin = require('../../middlewares/authAdmin');
 
 const router = express.Router();
 
+router.get('', categoryController.getCategories);
 router.post('/add', authAdmin, categoryController.addCategory);
 router.put('/:id/edit', authAdmin, categoryController.editCategory);
 router.delete('/:id/delete', authAdmin, categoryController.deleteCategory);
@@ -16,6 +17,17 @@ module.exports = router;
  * tags:
  *   name: Catgory
  *   description: Only admins can update categories.
+ */
+
+/**
+ * @swagger
+ * /category:
+ *   get:
+ *     summary: Get categories
+ *     tags: [Catgory]
+ *     responses:
+ *       "200":
+ *         description: SUCCESS
  */
 
 /**
