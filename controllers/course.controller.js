@@ -11,6 +11,11 @@ const getCourses = catchAsync(async (req, res) => {
   res.status(httpStatus.OK).send(courses);
 });
 
+const getCourseById = catchAsync(async (req, res) => {
+  const course = await courseService.getCourseById(req.params.id);
+  res.send(new Response(httpStatus.OK, course));
+});
+
 const addCourse = catchAsync(async (req, res) => {
   const course = await courseService.createCourse(req.body);
   res.send(new Response(httpStatus.OK, course));
@@ -18,5 +23,6 @@ const addCourse = catchAsync(async (req, res) => {
 
 module.exports = {
   getCourses,
+  getCourseById,
   addCourse,
 };

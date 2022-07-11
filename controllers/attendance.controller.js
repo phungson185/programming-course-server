@@ -8,6 +8,12 @@ const addAttendance = catchAsync(async (req, res) => {
   res.send(new Response(httpStatus.OK, attendance));
 });
 
+const getAttendanceByUserIdAndCourseId = catchAsync(async (req, res) => {
+  const attendance = await attendanceService.getAttendanceByUserIdAndCourseId(req.params.userId, req.params.courseId);
+  res.send(new Response(httpStatus.OK, attendance));
+});
+
 module.exports = {
     addAttendance,
+    getAttendanceByUserIdAndCourseId,
 };
