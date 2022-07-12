@@ -1,12 +1,14 @@
 const express = require('express');
 const courseController = require('../../controllers/course.controller');
 const authAdmin = require('../../middlewares/authAdmin');
+const authUser = require('../../middlewares/authUser');
 
 const router = express.Router();
 
 router.get('', courseController.getCourses);
 router.get('/:id', courseController.getCourseById);
 router.post('/add', authAdmin, courseController.addCourse);
+router.post('/:id/question/answer', authUser, courseController.checkAnswer);
 
 module.exports = router;
 
@@ -116,6 +118,39 @@ module.exports = router;
  *         required: true
  *         schema:
  *           type: string
+ *     responses:
+ *       "200":
+ *         description: SUCCESS
+ */
+
+/**
+ * @swagger
+ * /course/{id}/question/answer:
+ *   post:
+ *     summary: Check answer
+ *     tags: [Course]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Course id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - answers
+ *             properties:
+ *               answers:
+ *                 answers: array
+ *             example:
+ *               answers: ['A', 'B', 'C', 'D']
  *     responses:
  *       "200":
  *         description: SUCCESS

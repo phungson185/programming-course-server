@@ -10,18 +10,18 @@ const authUser = async (req, res, next) => {
   }
 
   if (!req.headers.authorization) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, 'No token provided');
+    next(new ApiError(httpStatus.UNAUTHORIZED, 'No token provided'));
   }
 
   const decoded = jwt.verify(token, config.jwt.secret);
   if (decoded) {
     let user = await userService.getUserById(decoded.sub);
     if (!user) {
-      throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+      next(new ApiError(httpStatus.UNAUTHORIZED, 'Invalid token'));
     }
 
     if (decoded.exp < Date.now() / 1000) {
-      throw new ApiError(httpStatus.UNAUTHORIZED, 'Token expired');
+      next(new ApiError(httpStatus.UNAUTHORIZED, 'Token expired'));
     }
 
     req.user = user;
