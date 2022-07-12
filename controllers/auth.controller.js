@@ -7,6 +7,8 @@ const {
   tokenService,
   emailService,
   attendanceService,
+  courseService,
+  categoryService,
 } = require('../services');
 
 const register = catchAsync(async (req, res) => {
@@ -46,11 +48,30 @@ const verifyEmail = catchAsync(async (req, res) => {
 const getProfile = catchAsync(async (req, res) => {
   const { user } = req;
   const attendances = await attendanceService.getAttendanceByUserId(user.id);
-  const courseIds = attendances.map((attendance) => {
-    const { courseId } = attendance;
-    return courseId;
-  });
-  res.send(new Response(httpStatus.OK, { user, courseIds }));
+  let completedCourse = [];
+  let uncompletedCourse = [];
+  await Promise.all(
+    attendances.map(async (attendance) => {
+      let course = {};
+      try {
+        let { _id, name, description, categoryId } =
+          await courseService.getCourseById(attendance.courseId);
+        course.id = _id;
+        course.name = name;
+        course.description = description;
+        let category = await categoryService.getCategoryById(categoryId);
+        course.category = category.name;
+      } catch (error) {}
+      if (attendance.achivement) {
+        const achivement = attendance.achivement.toString();
+        course.achivement = achivement;
+        completedCourse.push(course);
+      } else uncompletedCourse.push(course);
+    }),
+  );
+  res.send(
+    new Response(httpStatus.OK, { user, completedCourse, uncompletedCourse }),
+  );
 });
 
 module.exports = {
