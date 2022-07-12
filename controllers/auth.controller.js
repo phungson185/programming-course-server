@@ -6,6 +6,7 @@ const {
   userService,
   tokenService,
   emailService,
+  attendanceService,
 } = require('../services');
 
 const register = catchAsync(async (req, res) => {
@@ -43,7 +44,13 @@ const verifyEmail = catchAsync(async (req, res) => {
 });
 
 const getProfile = catchAsync(async (req, res) => {
-  res.send(new Response(httpStatus.OK, req.user));
+  const { user } = req;
+  const attendances = await attendanceService.getAttendanceByUserId(user.id);
+  const courseIds = attendances.map((attendance) => {
+    const { courseId } = attendance;
+    return courseId;
+  });
+  res.send(new Response(httpStatus.OK, { user, courseIds }));
 });
 
 module.exports = {
