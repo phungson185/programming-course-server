@@ -13,7 +13,12 @@ const generateToken = (userId, expires, secret = config.jwt.secret) => {
 
 const verifyToken = async (token, type) => {
   const payload = jwt.verify(token, config.jwt.secret);
-  const tokenDoc = await Token.findOne({ token, type, user: payload.sub, blacklisted: false });
+  const tokenDoc = await Token.findOne({
+    token,
+    type,
+    user: payload.sub,
+    blacklisted: false,
+  });
   if (!tokenDoc) {
     throw new Error('Token not found');
   }
@@ -21,7 +26,10 @@ const verifyToken = async (token, type) => {
 };
 
 const generateAuthTokens = async (user) => {
-  const accessTokenExpires = moment().add(config.jwt.accessExpirationDays, 'days');
+  const accessTokenExpires = moment().add(
+    config.jwt.accessExpirationDays,
+    'days',
+  );
   return generateToken(user.id, accessTokenExpires);
 };
 

@@ -4,6 +4,7 @@ const docsRoute = require('./docs.route');
 const categoryRoute = require('./category.route');
 const courseRoute = require('./course.route');
 const attendanceRoute = require('./attendance.route');
+const uploadRoute = require('./upload.route');
 const router = express.Router();
 
 const routes = [
@@ -22,6 +23,10 @@ const routes = [
   {
     path: '/attendance',
     route: attendanceRoute,
+  },
+  {
+    path: '/upload',
+    route: uploadRoute,
   },
   {
     path: '/docs',
