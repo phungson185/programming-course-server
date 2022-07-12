@@ -6,3 +6,4 @@ module.exports.courseService = require('./course.service');
 module.exports.attendanceService = require('./attendance.service');
 module.exports.tokenService = require('./token.service');
 module.exports.uploadService = require('./upload.service');
+module.exports.adminService = require('./admin.service');
