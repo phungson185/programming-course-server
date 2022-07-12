@@ -21,8 +21,14 @@ const addCourse = catchAsync(async (req, res) => {
   res.send(new Response(httpStatus.OK, course));
 });
 
+const checkAnswer = catchAsync(async (req, res) => {
+  const course = await courseService.checkAnswer(req.user._id, req.params.id, req.body);
+  res.send(new Response(httpStatus.OK, course));
+});
+
 module.exports = {
   getCourses,
   getCourseById,
   addCourse,
+  checkAnswer,
 };

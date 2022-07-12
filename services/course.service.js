@@ -3,6 +3,7 @@ const { Course } = require('../models');
 const ApiError = require('../utils/ApiError');
 const mongoose = require('mongoose');
 const categoryService = require('./category.service');
+const attendanceService = require('./attendance.service');
 
 const getCourses = async (filters, options) => {
   return await Course.paginate(filters, options);
@@ -22,8 +23,45 @@ const getCourseById = async (id) => {
   }
 };
 
+const checkAnswer = async (userId, courseId, answerBody) => {
+  const course = await getCourseById(courseId);
+  if (!course) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Course not found');
+  }
+
+  const attendance = await attendanceService.getAttendanceByUserIdAndCourseId(
+    userId,
+    courseId,
+  );
+  if (!attendance) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Attendance not found');
+  }
+
+  const questions = course.quiz.questions;
+
+  let correct = 0;
+
+  questions.forEach((question, index) => {
+    if (question.correctAnswer === answerBody.answers[index]) {
+      correct++;
+    }
+  });
+
+  const achieved = correct / questions.length * 10;
+
+  attendance.achivement = achieved.toString();
+  await attendance.save();
+
+  return {
+    userId: userId,
+    courseId: courseId,
+    achivement: achieved,
+  };
+};
+
 module.exports = {
   getCourses,
-  createCourse,
   getCourseById,
+  createCourse,
+  checkAnswer,
 };
