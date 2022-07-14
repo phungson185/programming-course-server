@@ -23,6 +23,17 @@ const getCourseById = async (id) => {
   }
 };
 
+const updateCourseById = async (courseId, updateBody) => {
+  const course = await getCourseById(courseId);
+  if (!course) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Course not found');
+  }
+
+  Object.assign(course, updateBody);
+  await course.save();
+  return course;
+};
+
 const checkAnswer = async (userId, courseId, answerBody) => {
   const course = await getCourseById(courseId);
   if (!course) {
@@ -47,7 +58,7 @@ const checkAnswer = async (userId, courseId, answerBody) => {
     }
   });
 
-  const achieved = correct / questions.length * 10;
+  const achieved = (correct / questions.length) * 10;
 
   attendance.achivement = achieved.toString();
   await attendance.save();
@@ -64,4 +75,5 @@ module.exports = {
   getCourseById,
   createCourse,
   checkAnswer,
+  updateCourseById,
 };
