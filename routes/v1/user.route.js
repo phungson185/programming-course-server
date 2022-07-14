@@ -74,8 +74,9 @@ module.exports = router;
  *               name:
  *                 type: string
  *             example:
- *               name: test
- *               email: test@gmail.com
+ *               name: fake name
+ *               avatar: https://random.imagecdn.app/500/150
+ *               cover: https://random.imagecdn.app/500/150
  *     responses:
  *       "200":
  *         description: SUCCESS
