@@ -3,6 +3,10 @@ const { User } = require('../models');
 const ApiError = require('../utils/ApiError');
 const mongoose = require('mongoose');
 
+const getUsers = async () => {
+  return await User.find();
+};
+
 const createUser = async (userBody, code) => {
   if (await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
@@ -31,10 +35,14 @@ const updateUserById = async (userId, updateBody) => {
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
-  if (updateBody.email && (await User.isEmailTaken(updateBody.email, userId))) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
-  }
-  Object.assign(user, updateBody);
+
+  const { name, avatar, cover } = updateBody;
+  let allowedBody = {};
+  if (name) allowedBody.name = name;
+  if (avatar) allowedBody.avatar = avatar;
+  if (cover) allowedBody.cover = cover;
+
+  Object.assign(user, allowedBody);
   await user.save();
   return user;
 };
@@ -49,6 +57,7 @@ const deleteUserById = async (userId) => {
 };
 
 module.exports = {
+  getUsers,
   createUser,
   queryUsers,
   getUserById,

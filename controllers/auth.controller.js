@@ -1,7 +1,15 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
 const Response = require('../utils/Response');
-const { authService, userService, tokenService, emailService } = require('../services');
+const {
+  authService,
+  userService,
+  tokenService,
+  emailService,
+  attendanceService,
+  courseService,
+  categoryService,
+} = require('../services');
 
 const register = catchAsync(async (req, res) => {
   const code = await emailService.sendVerificationEmail(req.body.email);
@@ -37,10 +45,40 @@ const verifyEmail = catchAsync(async (req, res) => {
   res.send(new Response(httpStatus.OK, null, 'Email verified'));
 });
 
+const getProfile = catchAsync(async (req, res) => {
+  const { user } = req;
+  const attendances = await attendanceService.getAttendanceByUserId(user.id);
+  let completedCourse = [];
+  let uncompletedCourse = [];
+  await Promise.all(
+    attendances.map(async (attendance) => {
+      let course = {};
+      try {
+        let { _id, name, description, categoryId } =
+          await courseService.getCourseById(attendance.courseId);
+        course.id = _id;
+        course.name = name;
+        course.description = description;
+        let category = await categoryService.getCategoryById(categoryId);
+        course.category = category.name;
+      } catch (error) {}
+      if (attendance.achivement) {
+        const achivement = attendance.achivement.toString();
+        course.achivement = achivement;
+        completedCourse.push(course);
+      } else uncompletedCourse.push(course);
+    }),
+  );
+  res.send(
+    new Response(httpStatus.OK, { user, completedCourse, uncompletedCourse }),
+  );
+});
+
 module.exports = {
   register,
   login,
   forgotPassword,
   resetPassword,
   verifyEmail,
+  getProfile,
 };

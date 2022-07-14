@@ -6,6 +6,7 @@ const courseRoute = require('./course.route');
 const attendanceRoute = require('./attendance.route');
 const uploadRoute = require('./upload.route');
 const adminRoute = require('./admin.route');
+const userRoute = require('./user.route');
 const router = express.Router();
 
 const routes = [
@@ -36,6 +37,10 @@ const routes = [
   {
     path: '/docs',
     route: docsRoute,
+  },
+  {
+    path: '/user',
+    route: userRoute,
   },
 ];
 

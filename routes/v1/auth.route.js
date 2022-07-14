@@ -9,6 +9,7 @@ router.post('/login', authController.login);
 router.post('/forgot-password', authController.forgotPassword);
 router.post('/verify-email', authController.verifyEmail);
 router.post('/reset-password', authUser, authController.resetPassword);
+router.get('/get-profile', authUser, authController.getProfile);
 
 module.exports = router;
 
@@ -165,6 +166,19 @@ module.exports = router;
  *             example:
  *               email: fake@example.com
  *               code: "123456"
+ *     responses:
+ *       "200":
+ *         description: SUCCESS
+ */
+
+/**
+ * @swagger
+ * /auth/get-profile:
+ *   get:
+ *     summary: get profile
+ *     tags: [Auth]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       "200":
  *         description: SUCCESS
