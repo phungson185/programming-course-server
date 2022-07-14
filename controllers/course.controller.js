@@ -21,8 +21,17 @@ const addCourse = catchAsync(async (req, res) => {
   res.send(new Response(httpStatus.OK, course));
 });
 
+const updateCourseById = catchAsync(async (req, res) => {
+  const course = await courseService.updateCourseById(req.params.id, req.body);
+  res.send(new Response(httpStatus.OK, course));
+});
+
 const checkAnswer = catchAsync(async (req, res) => {
-  const course = await courseService.checkAnswer(req.user._id, req.params.id, req.body);
+  const course = await courseService.checkAnswer(
+    req.user._id,
+    req.params.id,
+    req.body,
+  );
   res.send(new Response(httpStatus.OK, course));
 });
 
@@ -30,5 +39,6 @@ module.exports = {
   getCourses,
   getCourseById,
   addCourse,
+  updateCourseById,
   checkAnswer,
 };
