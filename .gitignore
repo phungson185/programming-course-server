@@ -10,3 +10,7 @@ yarn-error.log
 
 # Code coverage
 coverage
+
+# Lock files
+yarn.lock
+package-lock.json
