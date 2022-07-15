@@ -4,8 +4,7 @@ const Response = require('../utils/Response');
 const { uploadService } = require('../services');
 
 const upload = catchAsync(async (req, res) => {
-  console.log(req.files.imageFiles);
-  const courses = await uploadService.upload(req.swagger.params.file.value);
+  const courses = await uploadService.upload(req.file.path);
   res.status(httpStatus.OK).send({ url: courses });
 });
 

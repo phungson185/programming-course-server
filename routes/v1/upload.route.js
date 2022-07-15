@@ -1,9 +1,10 @@
 const express = require('express');
 const uploadController = require('../../controllers/upload.controller');
-
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 const router = express.Router();
 
-router.post('/', uploadController.upload);
+router.post('/', upload.single('fileName'), uploadController.upload);
 module.exports = router;
 /**
  * @swagger
@@ -22,12 +23,15 @@ module.exports = router;
  *         - multipart/form-data
  *         - application/x-www-form-urlencoded
  *         - binary
- *     parameters:
- *       - in: formData
- *         name: imageFiles
- *         required: true
- *         schema:
- *           type: file
+ *     requestBody:
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               fileName:
+ *                 type: string
+ *                 format: binary
  *     responses:
  *       "200":
  *         description: SUCCESS
