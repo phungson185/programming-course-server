@@ -44,7 +44,7 @@ const verifyEmail = async (email, code) => {
   if (user.code !== code) {
     throw new ApiError(httpStatus.FORBIDDEN, 'Code is not valid');
   }
-  await userService.updateUserById(user.id, { isEmailVerified: true });
+  return await userService.updateUserById(user.id, { isEmailVerified: true });
 };
 
 module.exports = {
