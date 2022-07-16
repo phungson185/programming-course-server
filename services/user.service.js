@@ -36,11 +36,13 @@ const updateUserById = async (userId, updateBody) => {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
 
-  const { name, avatar, cover } = updateBody;
+  const { name, avatar, cover, isEmailVerified, password } = updateBody;
   let allowedBody = {};
   if (name) allowedBody.name = name;
   if (avatar) allowedBody.avatar = avatar;
   if (cover) allowedBody.cover = cover;
+  if (isEmailVerified) allowedBody.isEmailVerified = isEmailVerified;
+  if (password) allowedBody.password = password;
 
   Object.assign(user, allowedBody);
   await user.save();

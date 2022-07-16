@@ -41,8 +41,8 @@ const resetPassword = catchAsync(async (req, res) => {
 });
 
 const verifyEmail = catchAsync(async (req, res) => {
-  await authService.verifyEmail(req.body.email, req.body.code);
-  res.send(new Response(httpStatus.OK, null, 'Email verified'));
+  const user = await authService.verifyEmail(req.body.email, req.body.code);
+  res.send(new Response(httpStatus.OK, user, 'Email verified'));
 });
 
 const getProfile = catchAsync(async (req, res) => {
