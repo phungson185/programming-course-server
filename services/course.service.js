@@ -60,13 +60,13 @@ const checkAnswer = async (userId, courseId, answerBody) => {
 
   const achieved = (correct / questions.length) * 10;
 
-  attendance.achivement = achieved.toString();
+  attendance.achievement = achieved;
   await attendance.save();
 
   return {
     userId: userId,
     courseId: courseId,
-    achivement: achieved,
+    achievement: achieved,
   };
 };
 

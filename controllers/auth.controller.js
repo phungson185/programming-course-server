@@ -62,9 +62,9 @@ const getProfile = catchAsync(async (req, res) => {
         let category = await categoryService.getCategoryById(categoryId);
         course.category = category.name;
       } catch (error) {}
-      if (attendance.achivement) {
-        const achivement = attendance.achivement.toString();
-        course.achivement = achivement;
+      if (attendance.achievement) {
+        const achievement = attendance.achievement.toString();
+        course.achievement = achievement;
         completedCourse.push(course);
       } else uncompletedCourse.push(course);
     }),

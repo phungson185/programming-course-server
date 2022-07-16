@@ -8,6 +8,12 @@ const getDashboard = catchAsync(async (req, res) => {
   res.send(new Response(httpStatus.OK, result));
 });
 
+const getCourseStatistics = catchAsync(async (req, res) => {
+  const result = await dashboardService.getInfoCourse();
+  res.send(new Response(httpStatus.OK, result));
+});
+
 module.exports = {
   getDashboard,
+  getCourseStatistics,
 };
