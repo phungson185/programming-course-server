@@ -14,3 +14,6 @@ coverage
 # Lock files
 yarn.lock
 package-lock.json
+
+# Uploaded files
+uploads

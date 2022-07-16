@@ -3,4 +3,4 @@ module.exports.categoryController = require('./category.controller');
 module.exports.courseController = require('./course.controller');
 module.exports.attendanceController = require('./attendance.controller');
 module.exports.uploadController = require('./upload.controller');
-module.exports.adminController = require('./admin.controller');
+module.exports.dashboardController = require('./dashboard.controller');

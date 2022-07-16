@@ -1,32 +1,26 @@
 const express = require('express');
-const adminController = require('../../controllers/admin.controller');
+const dashboardController = require('../../controllers/dashboard.controller');
 const authAdmin = require('../../middlewares/authAdmin');
 
 const router = express.Router();
 
-router.get('/:id', authAdmin, adminController.getInfo);
+router.get('', authAdmin, dashboardController.getDashboard);
 module.exports = router;
 /**
  * @swagger
  * tags:
  *   name: Dashboard
- *   description: Only admins can dashboard .
+ *   description: Only admins can update dashboard.
  */
 
 /**
  * @swagger
- * /dashboard/{id}:
+ * /dashboard:
  *   get:
- *     summary: Get course
+ *     summary: Get dashboard
  *     tags: [Dashboard]
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
  *     responses:
  *       "200":
  *         description: SUCCESS
