@@ -7,6 +7,7 @@ const upload = async (files) => {
   try {
     const uploadResponse = await cloudinary.uploader.upload(files, {
       upload_preset: 'tuantea',
+      resource_type: 'auto',
     });
     return uploadResponse.url;
   } catch (err) {
