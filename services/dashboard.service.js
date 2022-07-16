@@ -14,13 +14,18 @@ const getDashboard = async () => {
 
   const countCourseByCategoryId = await Course.aggregate([
     { $group: { _id: '$categoryId', count: { $sum: 1 } } },
-  ]).lookup({
-    from: 'categories',
-    localField: '_id',
-    foreignField: '_id',
-    as: 'category',
-    
-  });
+  ])
+    .lookup({
+      from: 'categories',
+      localField: '_id',
+      foreignField: '_id',
+      as: 'category',
+    })
+    .project({
+      _id: 0,
+      category: { $arrayElemAt: ['$category.name', 0] },
+      count: 1,
+    });
 
   const res = await Promise.all(countCourseByCategoryId);
 
@@ -33,12 +38,37 @@ const getDashboard = async () => {
   };
 };
 const getInfoCourse = async (id) => {
-  const users = await Attendance.find({ courseId: id }).count();
-  const course = await Course.findById(id);
+  let courseInfo = [];
+  courseInfo = await Attendance.aggregate([
+    {
+      $group: {
+        _id: '$courseId',
+        count: { $sum: 1 },
+        averageAchievement: { $avg: '$achievement' },
+        minAchievement: { $min: '$achievement' },
+        maxAchievement: { $max: '$achievement' },
+      },
+    },
+  ])
+    .lookup({
+      from: 'courses',
+      localField: '_id',
+      foreignField: '_id',
+      as: 'course',
+    })
+    .project({
+      _id: 0,
+      course: { $arrayElemAt: ['$course.name', 0] },
+      count: 1,
+      minAchievement: 1,
+      maxAchievement: 1,
+      averageAchievement: 1,
+    });
 
-  return users;
+  return courseInfo;
 };
 
 module.exports = {
   getDashboard,
+  getInfoCourse,
 };

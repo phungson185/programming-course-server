@@ -13,8 +13,8 @@ const attendanceSchema = mongoose.Schema(
       ref: 'Course',
       required: true,
     },
-    achivement: {
-      type: String,
+    achievement: {
+      type: Number,
       trim: true,
     },
   },
