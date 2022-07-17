@@ -12,7 +12,7 @@ const getCourses = catchAsync(async (req, res) => {
 });
 
 const getCourseById = catchAsync(async (req, res) => {
-  const course = await courseService.getCourseById(req.params.id);
+  const course = await courseService.getCourse(req.params.id)
   res.send(new Response(httpStatus.OK, course));
 });
 
