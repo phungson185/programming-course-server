@@ -9,7 +9,13 @@ const getInfo = catchAsync(async (req, res) => {
     result: result,
   });
 });
-
+const getInfoCourse = catchAsync(async (req, res) => {
+  const result = await adminService.getInfoCourse(req.params.id);
+  res.status(httpStatus.OK).send({
+    result: result,
+  });
+});
 module.exports = {
   getInfo,
+  getInfoCourse,
 };

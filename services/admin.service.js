@@ -18,12 +18,28 @@ const getInfo = async (id) => {
   return result;
 };
 const getInfoCourse = async (id) => {
-  const users = await Attendance.find({ courseId: id }).count();
+  const usersNumber = await Attendance.find({ courseId: id }).count();
   const course = await Course.findById(id);
-
-  return users;
+  const statistical = await Attendance.aggregate([
+    // { $match: { author: id } },
+    {
+      $group: {
+        _id: '$courseId',
+        minScore: { $min: '$achievement' },
+        maxScore: { $max: '$achievement' },
+        averageScore: { $avg: '$achievement' },
+      },
+    },
+  ]);
+  const result = {
+    usersNumber,
+    course,
+    statistical,
+  };
+  return result;
 };
 
 module.exports = {
   getInfo,
+  getInfoCourse,
 };

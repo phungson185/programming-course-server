@@ -5,6 +5,8 @@ const authAdmin = require('../../middlewares/authAdmin');
 const router = express.Router();
 
 router.get('/:id', authAdmin, adminController.getInfo);
+router.get('/course/:id', authAdmin, adminController.getInfoCourse);
+
 module.exports = router;
 /**
  * @swagger
@@ -16,6 +18,24 @@ module.exports = router;
 /**
  * @swagger
  * /dashboard/{id}:
+ *   get:
+ *     summary: Get course
+ *     tags: [Dashboard]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       "200":
+ *         description: SUCCESS
+ */
+/**
+ * @swagger
+ * /dashboard/course/{id}:
  *   get:
  *     summary: Get course
  *     tags: [Dashboard]
