@@ -23,6 +23,25 @@ const getCourseById = async (id) => {
   }
 };
 
+const getCourse = async (id) => {
+  if (mongoose.Types.ObjectId.isValid(id)) {
+    return await Course.aggregate([
+      {
+        $match: { _id: mongoose.Types.ObjectId(id) },
+      },
+    ])
+      .lookup({
+        from: 'categories',
+        localField: 'categoryId',
+        foreignField: '_id',
+        as: 'category',
+      })
+      .project({
+        categoryId: 0,
+      });
+  }
+};
+
 const updateCourseById = async (courseId, updateBody) => {
   const course = await getCourseById(courseId);
   if (!course) {
@@ -72,6 +91,7 @@ const checkAnswer = async (userId, courseId, answerBody) => {
 
 module.exports = {
   getCourses,
+  getCourse,
   getCourseById,
   createCourse,
   checkAnswer,
