@@ -1,12 +1,13 @@
 const express = require('express');
 const userController = require('../../controllers/user.controller');
 const authAdmin = require('../../middlewares/authAdmin');
+const authUser = require('../../middlewares/authUser');
 
 const router = express.Router();
 
 router.get('', authAdmin, userController.getUsers);
-router.get('/:id', authAdmin, userController.getUserById);
-router.put('/:id', authAdmin, userController.updateUserById);
+router.get('/:id', authUser, userController.getUserById);
+router.put('/:id', authUser, userController.updateUserById);
 
 module.exports = router;
 
