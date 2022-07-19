@@ -48,29 +48,25 @@ const verifyEmail = catchAsync(async (req, res) => {
 const getProfile = catchAsync(async (req, res) => {
   const { user } = req;
   const attendances = await attendanceService.getAttendanceByUserId(user.id);
-  let completedCourse = [];
-  let uncompletedCourse = [];
+  let courseOfUser = [];
   await Promise.all(
     attendances.map(async (attendance) => {
       let course = {};
-      try {
-        let { _id, name, description, categoryId } =
-          await courseService.getCourseById(attendance.courseId);
-        course.id = _id;
-        course.name = name;
-        course.description = description;
-        let category = await categoryService.getCategoryById(categoryId);
-        course.category = category.name;
-      } catch (error) {}
+      let { _id, name, description, categoryId } =
+        await courseService.getCourseById(attendance.courseId);
+      course.id = _id;
+      course.name = name;
+      course.description = description;
+      let category = await categoryService.getCategoryById(categoryId);
+      course.category = category.name;
       if (attendance.achievement) {
-        const achievement = attendance.achievement.toString();
-        course.achievement = achievement;
-        completedCourse.push(course);
-      } else uncompletedCourse.push(course);
+        course.achievement = attendance.achievement;
+      }
+      courseOfUser.push(course);
     }),
   );
   res.send(
-    new Response(httpStatus.OK, { user, completedCourse, uncompletedCourse }),
+    new Response(httpStatus.OK, { user, courseOfUser }),
   );
 });
 
