@@ -4,6 +4,7 @@ const ApiError = require('../utils/ApiError');
 const mongoose = require('mongoose');
 const courseService = require('./course.service');
 const userService = require('./user.service');
+const logger = require('../config/logger');
 
 const createAttendance = async (attendanceBody) => {
   // const course = await courseService.getCourseById(attendanceBody.courseId);
@@ -39,7 +40,9 @@ const getAttendanceByUserId = async (userId) => {
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid user id');
   }
-  const attendance = await Attendance.find({ userId });
+  const attendance = await Attendance.find({ userId: userId }).sort({
+    createdAt: -1,
+  });
   if (!attendance) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Attendance not found');
   }

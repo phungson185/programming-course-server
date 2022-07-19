@@ -10,6 +10,7 @@ const {
   courseService,
   categoryService,
 } = require('../services');
+const logger = require('../config/logger');
 
 const register = catchAsync(async (req, res) => {
   const code = await emailService.sendVerificationEmail(req.body.email);
@@ -51,18 +52,17 @@ const getProfile = catchAsync(async (req, res) => {
   let courseOfUser = [];
   await Promise.all(
     attendances.map(async (attendance) => {
-      let course = {};
-      let { _id, name, description, categoryId, image } =
-        await courseService.getCourseById(attendance.courseId);
-      course.id = _id;
-      course.name = name;
-      course.description = description;
-      course.categoryId = categoryId;
-      course.image = image;
+      let newCourse = {};
+      let course = await courseService.getCourseById(attendance.courseId);
+      newCourse.id = course._id;
+      newCourse.name = course.name;
+      newCourse.description = course.description;
+      newCourse.categoryId = course.categoryId;
+      newCourse.image = course.image;
       if (attendance.achievement) {
-        course.achievement = attendance.achievement;
+        newCourse.achievement = attendance.achievement;
       }
-      courseOfUser.push(course);
+      courseOfUser.push(newCourse);
     }),
   );
   res.send(new Response(httpStatus.OK, { user, courseOfUser }));

@@ -4,6 +4,7 @@ const ApiError = require('../utils/ApiError');
 const mongoose = require('mongoose');
 const categoryService = require('./category.service');
 const attendanceService = require('./attendance.service');
+const logger = require('../config/logger');
 
 const getCourses = async (filters, options) => {
   return await Course.paginate(filters, options);
@@ -19,7 +20,7 @@ const createCourse = async (courseBody) => {
 
 const getCourseById = async (id) => {
   if (mongoose.Types.ObjectId.isValid(id)) {
-    return Course.findById(id);
+    return await Course.findById(id);
   }
 };
 
