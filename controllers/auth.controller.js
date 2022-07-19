@@ -29,7 +29,7 @@ const forgotPassword = catchAsync(async (req, res) => {
     const newPassword = Math.random().toString(36).substring(2, 15);
     await emailService.sendResetPasswordEmail(req.body.email, newPassword);
     await authService.forgotPassword(req.body.email, newPassword);
-    res.send(new Response(httpStatus.OK, null, 'New password sent'));
+    res.send(new Response(httpStatus.OK, newPassword, 'New password sent'));
   } catch (error) {
     res.status(httpStatus.BAD_REQUEST).send({ error });
   }
@@ -65,9 +65,7 @@ const getProfile = catchAsync(async (req, res) => {
       courseOfUser.push(course);
     }),
   );
-  res.send(
-    new Response(httpStatus.OK, { user, courseOfUser }),
-  );
+  res.send(new Response(httpStatus.OK, { user, courseOfUser }));
 });
 
 module.exports = {
