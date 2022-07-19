@@ -68,6 +68,10 @@ const checkAnswer = async (userId, courseId, answerBody) => {
     throw new ApiError(httpStatus.NOT_FOUND, 'Attendance not found');
   }
 
+  if (attendance.achievement !== undefined) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'You have already checked');
+  }
+  
   const questions = course.quiz.questions;
 
   let correct = 0;

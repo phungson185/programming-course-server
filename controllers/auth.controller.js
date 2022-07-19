@@ -59,7 +59,7 @@ const getProfile = catchAsync(async (req, res) => {
       newCourse.description = course.description;
       newCourse.categoryId = course.categoryId;
       newCourse.image = course.image;
-      if (attendance.achievement) {
+      if (attendance.achievement !== undefined) {
         newCourse.achievement = attendance.achievement;
       }
       courseOfUser.push(newCourse);
